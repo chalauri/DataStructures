@@ -1,7 +1,7 @@
 package main;
 
 import splay.SplayMethods;
-import splay.Node;
+import splay.STNode;
 
 /**
  * 
@@ -17,7 +17,7 @@ public class Main {
 		Integer b = 9;
 		Integer c = -7;
 
-		Node<Integer> h = SplayMethods.splayInsert(null, a);
+		STNode<Integer> h = SplayMethods.splayInsert(null, a);
 		h = SplayMethods.splayInsert(h, b);
 		h = SplayMethods.splayInsert(h, c);
 

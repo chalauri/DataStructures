@@ -8,32 +8,32 @@ package splay;
  */
 public class SplayMethods {
 
-	public static <T extends Comparable<T>> Node<T> rotate(Node<T> h, int direction) {
+	public static <T extends Comparable<T>> STNode<T> rotate(STNode<T> h, int direction) {
 		int oppositeDir = Math.abs(direction - 1);
 
 		if (h == null || h.getChild()[oppositeDir] == null) {
 			return h;
 		}
 
-		Node<T> tmp = h.getChild()[oppositeDir];
+		STNode<T> tmp = h.getChild()[oppositeDir];
 		h.getChild()[oppositeDir] = tmp.getChild()[direction];
 		tmp.getChild()[direction] = h;
 
 		return tmp;
 	}
 
-	public static <T extends Comparable<T>> Node<T> splayInsert(Node<T> h, T key) {
+	public static <T extends Comparable<T>> STNode<T> splayInsert(STNode<T> h, T key) {
 
 		if (h == null) {
 
-			return new Node<T>(key);
+			return new STNode<T>(key);
 		}
 
 		if (key.compareTo(h.getKey()) == -1) {
 
 			if (h.getChild()[0] == null) {
 
-				return new Node<T>(key, null, h);
+				return new STNode<T>(key, null, h);
 			}
 
 			if (key.compareTo(h.getChild()[0].getKey()) == -1) {
@@ -50,7 +50,7 @@ public class SplayMethods {
 
 		if (h.getChild()[1] == null) {
 
-			return new Node<T>(key, h);
+			return new STNode<T>(key, h);
 		}
 
 		if (key.compareTo(h.getChild()[1].getKey()) == 1) {
