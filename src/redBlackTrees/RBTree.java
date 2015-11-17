@@ -1,5 +1,7 @@
 package redBlackTrees;
 
+import utils.Utils;
+
 /**
  * 
  * @author G. Chalauri
@@ -35,9 +37,9 @@ public class RBTree<T extends Comparable<T>> {
 		Node<T> x = root;
 		while (!x.equals(nill) && !k.equals(x.getKey())) {
 			if (k.compareTo(x.getKey()) == -1) {
-				x = x.getChild()[0];
+				x = x.getChild()[Utils.LEFT];
 			} else {
-				x = x.getChild()[0];
+				x = x.getChild()[Utils.LEFT];
 			}
 		}
 
@@ -147,7 +149,8 @@ public class RBTree<T extends Comparable<T>> {
 	public void insertFixup(Node<T> z) {
 
 		while (z.getParent().getColor().equals(Utils.RED)) {
-			if (z.getParent().equals(z.getParent().getParent().getChild()[Utils.LEFT])) {
+			if (z.getParent().equals(
+					z.getParent().getParent().getChild()[Utils.LEFT])) {
 				Node<T> y = z.getParent().getParent().getChild()[Utils.RIGHT];
 				if (y.getColor().equals(Utils.RED)) {
 					z.getParent().setColor(Utils.BLACK);
@@ -212,9 +215,9 @@ public class RBTree<T extends Comparable<T>> {
 		while (!nill.equals(x)) {
 			y = x;
 			if (z.getKey().compareTo(x.getKey()) == -1) {
-				x = x.getChild()[0];
+				x = x.getChild()[Utils.LEFT];
 			} else {
-				x = x.getChild()[1];
+				x = x.getChild()[Utils.RIGHT];
 			}
 		}
 
@@ -223,14 +226,14 @@ public class RBTree<T extends Comparable<T>> {
 			root = z;
 		} else {
 			if (z.getKey().compareTo(y.getKey()) == -1) {
-				y.getChild()[0] = z;
+				y.getChild()[Utils.LEFT] = z;
 			} else {
-				y.getChild()[1] = z;
+				y.getChild()[Utils.RIGHT] = z;
 			}
 		}
 
-		z.getChild()[0] = nill;
-		z.getChild()[1] = nill;
+		z.getChild()[Utils.LEFT] = nill;
+		z.getChild()[Utils.RIGHT] = nill;
 		z.setColor(Utils.RED);
 	}
 
@@ -252,11 +255,13 @@ public class RBTree<T extends Comparable<T>> {
 				}
 
 				if (w.getChild()[Utils.LEFT].getColor().equals(Utils.BLACK)
-						&& w.getChild()[Utils.RIGHT].getColor().equals(Utils.BLACK)) {
+						&& w.getChild()[Utils.RIGHT].getColor().equals(
+								Utils.BLACK)) {
 					w.setColor(Utils.RED);
 					x = x.getParent();
 				} else {
-					if (w.getChild()[Utils.RIGHT].getColor().equals(Utils.BLACK)) {
+					if (w.getChild()[Utils.RIGHT].getColor()
+							.equals(Utils.BLACK)) {
 						w.getChild()[Utils.LEFT].setColor(Utils.BLACK);
 						w.setColor(Utils.RED);
 						rotate(Utils.RIGHT, w);
@@ -278,7 +283,8 @@ public class RBTree<T extends Comparable<T>> {
 				}
 
 				if (w.getChild()[Utils.LEFT].getColor().equals(Utils.BLACK)
-						&& w.getChild()[Utils.RIGHT].getColor().equals(Utils.BLACK)) {
+						&& w.getChild()[Utils.RIGHT].getColor().equals(
+								Utils.BLACK)) {
 					w.setColor(Utils.RED);
 					x = x.getParent();
 				} else {
@@ -379,9 +385,9 @@ public class RBTree<T extends Comparable<T>> {
 	 */
 	void inorderWalk(Node<T> x) {
 		if (!x.equals(nill)) {
-			inorderWalk(x.getChild()[0]);
+			inorderWalk(x.getChild()[Utils.LEFT]);
 			System.out.println(x.getKey() + "\t");
-			inorderWalk(x.getChild()[1]);
+			inorderWalk(x.getChild()[Utils.RIGHT]);
 		}
 	}
 

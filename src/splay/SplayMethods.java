@@ -1,14 +1,24 @@
 package splay;
 
+import utils.Utils;
+
 /**
  * 
- * @author Giga
+ * @author G. Chalauri
  *
  *         04.10.2015
  */
 public class SplayMethods {
 
-	public static <T extends Comparable<T>> STNode<T> rotate(STNode<T> h, int direction) {
+	/**
+	 * Rotate
+	 * 
+	 * @param h
+	 * @param direction
+	 * @return STNode<T>
+	 */
+	public static <T extends Comparable<T>> STNode<T> rotate(STNode<T> h,
+			int direction) {
 		int oppositeDir = Math.abs(direction - 1);
 
 		if (h == null || h.getChild()[oppositeDir] == null) {
@@ -22,7 +32,15 @@ public class SplayMethods {
 		return tmp;
 	}
 
-	public static <T extends Comparable<T>> STNode<T> splayInsert(STNode<T> h, T key) {
+	/**
+	 * Splay Insert
+	 * 
+	 * @param h
+	 * @param key
+	 * @return STNode<T>
+	 */
+	public static <T extends Comparable<T>> STNode<T> splayInsert(STNode<T> h,
+			T key) {
 
 		if (h == null) {
 
@@ -31,38 +49,38 @@ public class SplayMethods {
 
 		if (key.compareTo(h.getKey()) == -1) {
 
-			if (h.getChild()[0] == null) {
+			if (h.getChild()[Utils.LEFT] == null) {
 
 				return new STNode<T>(key, null, h);
 			}
 
-			if (key.compareTo(h.getChild()[0].getKey()) == -1) {
-				h.getChild()[0].getChild()[0] = splayInsert(
-						h.getChild()[0].getChild()[0], key);
-				h = rotate(h, 1);
+			if (key.compareTo(h.getChild()[Utils.LEFT].getKey()) == -1) {
+				h.getChild()[Utils.LEFT].getChild()[Utils.LEFT] = splayInsert(
+						h.getChild()[Utils.LEFT].getChild()[Utils.LEFT], key);
+				h = rotate(h, Utils.RIGHT);
 			} else {
-				h.getChild()[0].getChild()[1] = splayInsert(
-						h.getChild()[0].getChild()[1], key);
-				h = rotate(h.getChild()[0], 0);
+				h.getChild()[Utils.LEFT].getChild()[Utils.RIGHT] = splayInsert(
+						h.getChild()[Utils.LEFT].getChild()[Utils.RIGHT], key);
+				h = rotate(h.getChild()[Utils.LEFT], Utils.LEFT);
 			}
-			return rotate(h, 1);
+			return rotate(h, Utils.RIGHT);
 		}
 
-		if (h.getChild()[1] == null) {
+		if (h.getChild()[Utils.RIGHT] == null) {
 
 			return new STNode<T>(key, h);
 		}
 
-		if (key.compareTo(h.getChild()[1].getKey()) == 1) {
-			h.getChild()[1].getChild()[1] = splayInsert(
-					h.getChild()[1].getChild()[1], key);
-			h = rotate(h, 0);
+		if (key.compareTo(h.getChild()[Utils.RIGHT].getKey()) == 1) {
+			h.getChild()[Utils.RIGHT].getChild()[Utils.RIGHT] = splayInsert(
+					h.getChild()[Utils.RIGHT].getChild()[Utils.RIGHT], key);
+			h = rotate(h, Utils.LEFT);
 		} else {
-			h.getChild()[1].getChild()[0] = splayInsert(
-					h.getChild()[1].getChild()[0], key);
-			h = rotate(h.getChild()[1], 1);
+			h.getChild()[Utils.RIGHT].getChild()[Utils.LEFT] = splayInsert(
+					h.getChild()[Utils.RIGHT].getChild()[Utils.LEFT], key);
+			h = rotate(h.getChild()[Utils.RIGHT], Utils.RIGHT);
 		}
 
-		return rotate(h, 0);
+		return rotate(h, Utils.LEFT);
 	}
 }

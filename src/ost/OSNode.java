@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 
 /**
  * 
- * @author Giga
+ * @author G. Chalauri
  *
  *         08.10.2015
  */

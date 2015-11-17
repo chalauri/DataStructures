@@ -2,14 +2,23 @@ package ost;
 
 import java.util.Random;
 
+import splay.STNode;
+import utils.Utils;
+
 /**
  * 
- * @author Giga
+ * @author G. Chalauri
  *
  *         08.10.2015
  */
 public class OSMethods {
 
+	/**
+	 * Return size
+	 * 
+	 * @param node
+	 * @return {@link Integer}
+	 */
 	public static <T extends Comparable<T>> int size(OSNode<T> node) {
 
 		if (node == null) {
@@ -17,9 +26,17 @@ public class OSMethods {
 			return 0;
 		}
 
-		return size(node.getChild()[0]) + size(node.getChild()[1]) + 1;
+		return size(node.getChild()[Utils.LEFT])
+				+ size(node.getChild()[Utils.RIGHT]) + 1;
 	}
 
+	/**
+	 * Rotate tree
+	 * 
+	 * @param h
+	 * @param direction
+	 * @return OSNode<T>
+	 */
 	public static <T extends Comparable<T>> OSNode<T> rotate(OSNode<T> h,
 			int direction) {
 		int oppositeDir = Math.abs(direction - 1);
@@ -31,15 +48,24 @@ public class OSMethods {
 		OSNode<T> tmp = h.getChild()[oppositeDir];
 		h.getChild()[oppositeDir] = tmp.getChild()[direction];
 		tmp.getChild()[direction] = h;
-		h.setSize(size(h.getChild()[0]) + size(h.getChild()[1]) + 1);
-		tmp.setSize(size(tmp.getChild()[0]) + size(tmp.getChild()[1]) + 1);
+		h.setSize(size(h.getChild()[Utils.LEFT])
+				+ size(h.getChild()[Utils.RIGHT]) + 1);
+		tmp.setSize(size(tmp.getChild()[Utils.LEFT])
+				+ size(tmp.getChild()[Utils.RIGHT]) + 1);
 
 		return tmp;
 	}
 
+	/**
+	 * Select i'th node
+	 * 
+	 * @param x
+	 * @param i
+	 * @return OSNode<T>
+	 */
 	public static <T extends Comparable<T>> OSNode<T> select(OSNode<T> x, int i) {
 
-		int r = size(x.getChild()[0]) + 1;
+		int r = size(x.getChild()[Utils.LEFT]) + 1;
 
 		if (r == i) {
 
@@ -48,13 +74,20 @@ public class OSMethods {
 
 		if (r < i) {
 
-			return select(x.getChild()[0], i);
+			return select(x.getChild()[Utils.LEFT], i);
 		} else {
 
-			return select(x.getChild()[1], i - r);
+			return select(x.getChild()[Utils.RIGHT], i - r);
 		}
 	}
 
+	/**
+	 * Inserting into top
+	 * 
+	 * @param h
+	 * @param x
+	 * @return OSNode<T>
+	 */
 	public static <T extends Comparable<T>> OSNode<T> insertTop(OSNode<T> h,
 			OSNode<T> x) {
 
@@ -64,16 +97,23 @@ public class OSMethods {
 		}
 
 		if (x.getKey().compareTo(h.getKey()) == -1) {
-			h.getChild()[0] = insertTop(h.getChild()[0], x);
-			h = rotate(h, 1);
+			h.getChild()[Utils.LEFT] = insertTop(h.getChild()[Utils.LEFT], x);
+			h = rotate(h, Utils.RIGHT);
 		} else {
-			h.getChild()[1] = insertTop(h.getChild()[1], x);
-			h = rotate(h, 0);
+			h.getChild()[Utils.RIGHT] = insertTop(h.getChild()[Utils.RIGHT], x);
+			h = rotate(h, Utils.LEFT);
 		}
 
 		return h;
 	}
 
+	/**
+	 * Random insertion
+	 * 
+	 * @param h
+	 * @param x
+	 * @return OSNode<T>
+	 */
 	public static <T extends Comparable<T>> OSNode<T> insertRandom(OSNode<T> h,
 			OSNode<T> x) {
 
@@ -89,14 +129,14 @@ public class OSMethods {
 		}
 
 		if (x.getKey().compareTo(h.getKey()) == -1) {
-			h.getChild()[0] = insertRandom(h.getChild()[0], x);
+			h.getChild()[Utils.LEFT] = insertRandom(h.getChild()[Utils.LEFT], x);
 		} else {
-			h.getChild()[1] = insertRandom(h.getChild()[1], x);
+			h.getChild()[Utils.RIGHT] = insertRandom(h.getChild()[Utils.RIGHT],
+					x);
 		}
 
 		h.setSize(size(h) + 1);
 
 		return h;
 	}
-
 }
