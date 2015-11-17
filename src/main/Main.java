@@ -2,8 +2,8 @@ package main;
 
 import ost.OSMethods;
 import ost.OSNode;
-import splay.SplayMethods;
-import splay.STNode;
+import redBlackTrees.Node;
+import redBlackTrees.RBTree;
 
 /**
  * 
@@ -11,7 +11,7 @@ import splay.STNode;
  *
  *         04.10.2015
  */
-@SuppressWarnings("unused")
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -34,6 +34,18 @@ public class Main {
 		root = OSMethods.insertTop(root, nine);
 		
 		System.out.println(root.getKey()+" " + root.getSize());
+		
+		
+		RBTree<Integer> tree = new RBTree<>();
+		
+		Node<Integer> node ;
+		
+		for(int i=0; i < 23; i++){
+			node = new Node<Integer>(i+1);
+			tree.insert(node);
+		}
+		
+		System.out.println(tree.getSize());
 	}
 
 }
